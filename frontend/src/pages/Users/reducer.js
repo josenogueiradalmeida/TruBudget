@@ -16,6 +16,10 @@ import {
   REMOVE_INITIAL_USER,
   CREATE_GROUP_SUCCESS,
   LIST_GLOBAL_PERMISSIONS_SUCCESS,
+  SHOW_NEXT_STEP,
+  USER_PASSWORD,
+  CHECK_USER_PASSWORD_SUCCESS,
+  CHECK_USER_PASSWORD_ERROR
 } from "./actions";
 
 const defaultState = fromJS({
@@ -38,6 +42,8 @@ const defaultState = fromJS({
     name: "",
     groupUsers: []
   },
+  currentStep: 0,
+  password: ""
 });
 
 export default function userDashboardReducer(state = defaultState, action) {
@@ -79,10 +85,21 @@ export default function userDashboardReducer(state = defaultState, action) {
     case HIDE_DASHBOARD_DIALOG:
       return state.merge({
         dashboardDialogShown: false,
-        userToAdd: defaultState.get("userToAdd")
+        userToAdd: defaultState.get("userToAdd"),
+        password: "",
+        wrongPasswordGiven: undefined,
+        currentStep: 0
       });
     case LIST_GLOBAL_PERMISSIONS_SUCCESS:
       return state.set("globalPermissions", action.data);
+    case SHOW_NEXT_STEP:
+      return state.set("currentStep", action.step);
+    case USER_PASSWORD:
+      return state.set("password", action.password);
+    case CHECK_USER_PASSWORD_SUCCESS:
+      return state.set("wrongPasswordGiven", false);
+    case CHECK_USER_PASSWORD_ERROR:
+      return state.set("wrongPasswordGiven", true);
     default:
       return state;
   }

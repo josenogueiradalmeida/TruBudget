@@ -25,6 +25,7 @@ import {
   setAdminPermissions,
   grantAllUserPermissions,
   listPermissions,
+  changeUserPassword
 } from "./actions";
 import { fetchUser } from "../Login/actions";
 import { showSnackbar, storeSnackbarMessage } from "../Notifications/actions";
@@ -33,8 +34,8 @@ class UserManagementContainer extends Component {
   componentWillMount() {
     this.props.fetchUser();
     this.props.fetchGroups();
-    if(this.props.allowedIntents.includes("global.listPermissions")) {
-      this.props.listGlobalPermissions()
+    if (this.props.allowedIntents.includes("global.listPermissions")) {
+      this.props.listGlobalPermissions();
     }
   }
   componentWillUnmount() {
@@ -52,7 +53,6 @@ class UserManagementContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    nodes: state.getIn(["users", "nodes"]),
     allowedIntents: state.getIn(["login", "allowedIntents"]),
     users: state.getIn(["login", "user"]),
     userId: state.getIn(["login", "id"]),
@@ -62,8 +62,7 @@ const mapStateToProps = state => {
     groupToAdd: state.getIn(["users", "groupToAdd"]),
     editMode: state.getIn(["users", "editMode"]),
     editDialogShown: state.getIn(["users", "editDialogShown"]),
-    editId: state.getIn(["users", "editId"]),
-
+    editId: state.getIn(["users", "editId"])
   };
 };
 
@@ -75,6 +74,7 @@ const mapDispatchToProps = dispatch => {
     setOrganization: organization => dispatch(setOrganization(organization)),
     setUsername: username => dispatch(setUsername(username)),
     setPassword: password => dispatch(setPassword(password)),
+    changeUserPassword: (userId, newPassword) => dispatch(changeUserPassword(userId, newPassword)),
     showErrorSnackbar: () => dispatch(showSnackbar(true)),
     showSnackbar: () => dispatch(showSnackbar()),
     storeSnackbarMessage: message => dispatch(storeSnackbarMessage(message)),

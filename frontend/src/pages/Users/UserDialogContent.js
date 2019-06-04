@@ -36,14 +36,16 @@ const styles = {
 
 const UserDialogContent = ({
   classes,
-  userToAdd,
+  user,
+  editMode,
   setDisplayName,
   setOrganization,
   setUsername,
   setPassword,
   organization
 }) => {
-  const { displayName, password, username } = userToAdd;
+  const { displayName, password, username } = user;
+
   return (
     <div className={classes.container}>
       <div className={classes.textInputContainer}>
@@ -52,6 +54,7 @@ const UserDialogContent = ({
           label={strings.users.full_name}
           value={displayName}
           error={false}
+          disabled={editMode}
           icon={<NameIcon />}
           id="fullname"
           onChange={event => setDisplayName(event.target.value)}
@@ -68,7 +71,7 @@ const UserDialogContent = ({
         />
       </div>
       <div className={classes.textInputContainer}>
-        <Username username={username} storeUsername={setUsername} failed={false} id="username" />
+        <Username username={username} disabled={editMode} storeUsername={setUsername} failed={false} id="username" />
         <Password password={password} storePassword={setPassword} failed={false} id="password" />
       </div>
     </div>

@@ -29,20 +29,31 @@ export const CREATE_GROUP_SUCCESS = "CREATE_GROUP_SUCCESS";
 export const ADD_USER = "ADD_USER";
 export const ADD_USER_SUCCESS = "ADD_USER_SUCCESS";
 
+export const CHANGE_USER_PASSWORD = "CHANGE_USER_PASSWORD";
+export const CHANGE_USER_PASSWORD_SUCCESS = "CHANGE_USER_PASSWORD_SUCCESS";
+
 export const REMOVE_USER = "REMOVE_USER";
 export const REMOVE_USER_SUCCESS = "REMOVE_USER_SUCCESS";
 
 export const GRANT_ALL_USER_PERMISSIONS = "GRANT_ALL_USER_PERMISSIONS";
 export const GRANT_ALL_USER_PERMISSIONS_SUCCESS = "GRANT_ALL_USER_PERMISSIONS_SUCCESS";
 
-export const GRANT_GLOBAL_PERMISSION= "GRANT_GLOBAL_PERMISSION";
-export const GRANT_GLOBAL_PERMISSION_SUCCESS= "GRANT_GLOBAL_PERMISSION_SUCCESS";
+export const GRANT_GLOBAL_PERMISSION = "GRANT_GLOBAL_PERMISSION";
+export const GRANT_GLOBAL_PERMISSION_SUCCESS = "GRANT_GLOBAL_PERMISSION_SUCCESS";
 
-export const REVOKE_GLOBAL_PERMISSION= "REVOKE_GLOBAL_PERMISSION";
-export const REVOKE_GLOBAL_PERMISSION_SUCCESS= "REVOKE_GLOBAL_PERMISSION_SUCCESS";
+export const REVOKE_GLOBAL_PERMISSION = "REVOKE_GLOBAL_PERMISSION";
+export const REVOKE_GLOBAL_PERMISSION_SUCCESS = "REVOKE_GLOBAL_PERMISSION_SUCCESS";
 
-export const LIST_GLOBAL_PERMISSIONS = "LIST_GLOBAL_PERMISSIONS"
-export const LIST_GLOBAL_PERMISSIONS_SUCCESS = "LIST_GLOBAL_PERMISSIONS_SUCCESS"
+export const LIST_GLOBAL_PERMISSIONS = "LIST_GLOBAL_PERMISSIONS";
+export const LIST_GLOBAL_PERMISSIONS_SUCCESS = "LIST_GLOBAL_PERMISSIONS_SUCCESS";
+
+export const SHOW_NEXT_STEP = "SHOW_NEXT_STEP";
+
+export const CHECK_USER_PASSWORD = "CHECK_USER_PASSWORD";
+export const CHECK_USER_PASSWORD_SUCCESS = "CHECK_USER_PASSWORD_SUCCESS";
+export const CHECK_USER_PASSWORD_ERROR = "CHECK_USER_PASSWORD_ERROR";
+
+export const USER_PASSWORD = "USER_PASSWORD";
 
 export function fetchGroups(showLoading = false) {
   return {
@@ -93,6 +104,14 @@ export function addUser(groupId, userId) {
     type: ADD_USER,
     groupId,
     userId
+  };
+}
+
+export function changeUserPassword(userId, newPassword) {
+  return {
+    type: CHANGE_USER_PASSWORD,
+    userId,
+    newPassword
   };
 }
 
@@ -182,24 +201,46 @@ export function hideDashboardDialog() {
   };
 }
 
-export function grantGlobalPermission(identity, intent){
+export function grantGlobalPermission(identity, intent) {
   return {
     type: GRANT_GLOBAL_PERMISSION,
     identity,
     intent
-  }
+  };
 }
 
-export function revokeGlobalPermission(identity, intent){
+export function revokeGlobalPermission(identity, intent) {
   return {
     type: REVOKE_GLOBAL_PERMISSION,
     identity,
     intent
-  }
+  };
 }
 
-export function listPermissions(){
+export function listPermissions() {
   return {
     type: LIST_GLOBAL_PERMISSIONS
-  }
+  };
+}
+
+export function showNextStep(step) {
+  return {
+    type: SHOW_NEXT_STEP,
+    step
+  };
+}
+
+export function checkUserPassword(username, password) {
+  return {
+    type: CHECK_USER_PASSWORD,
+    username,
+    password
+  };
+}
+
+export function storePassword(password) {
+  return {
+    type: USER_PASSWORD,
+    password
+  };
 }

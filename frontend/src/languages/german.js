@@ -179,14 +179,18 @@ const de = {
     full_name: "German: Full Name",
     new_user: "German: New User",
     user_created: "German: User successfully created",
+    user_edited: "User erfolgreich bearbeitet",
     users: "German: Users",
     new_group: "German: New user group",
     groups: "German: Groups",
     add_user: "German: Add Users",
+    edit_user: "User Bearbeiten",
     group_created: "German: Group successfully created",
     add_group: "German: Add Group",
     edit_group: "German: Edit Group",
-    edit_permissions_for: "German: Edit permissions for"
+    edit_permissions_for: "German: Edit permissions for",
+    enter_password: "Eingabe",
+    user_enter_password: "Bitte geben Sie ihr Passwort ein um fortzufahren"
   },
 
   nodesDashboard: {

@@ -181,14 +181,18 @@ const fr = {
     full_name: "Nom complet",
     new_user: "Nouvel utilisateur",
     user_created: "Utilisateur créé avec succès",
+    user_edited: "FRENCH: User successfully edited",
     users: "Utilisateurs",
     add_user: "Ajouter des utilisateurs",
+    edit_user: "FRENCH: Edit User",
     group_created: "Groupe crée avec succès",
     groups: "Groupes",
     new_group: "Nouveau groupe d'utilisateurs",
     add_group: "Ajouter un groupe",
     edit_group: "Éditer und groupe",
-    edit_permissions_for: "Éditer les autorisations pour"
+    edit_permissions_for: "Éditer les autorisations pour",
+    enter_password: "French: Enter",
+    user_enter_password: "FRENCH: Please enter your password to proceed"
   },
 
   nodesDashboard: {

@@ -74,14 +74,18 @@ const en = {
     full_name: "Full Name",
     new_user: "New User",
     user_created: "User successfully created",
+    user_edited: "User successfully edited",
     users: "Users",
     add_user: "Add User",
+    edit_user: "Edit User",
     group_created: "Group successfully created",
     groups: "Groups",
     add_group: "Add Group",
     edit_group: "Edit Group",
     edit_permissions_for: "Edit permissions for",
-    new_group: "New Group"
+    new_group: "New Group",
+    enter_password: "Enter",
+    user_enter_password: "Please enter your password to proceed"
   },
 
   nodesDashboard: {

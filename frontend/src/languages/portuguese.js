@@ -74,14 +74,18 @@ const pt = {
     full_name: "Nome completo",
     new_user: "Novo usuário",
     user_created: "Portuguese: User successfully created",
+    user_edited: "Portuguese: User successfully edited",
     users: "Usuários",
     add_user: "Portuguese: Add Users",
+    edit_user: "Portuguese: Edit User",
     group_created: "Portuguese: Group successfully created",
     groups: "Portuguese: Groups",
     new_group: "Portuguese: New user group",
     add_group: "Portuguese: Add Group",
     edit_group: "Portuguese: Edit Group",
-    edit_permissions_for: "Portuguese: Edit permissions for"
+    edit_permissions_for: "Portuguese: Edit permissions for",
+    enter_password: "Portuguese: Enter",
+    user_enter_password: "PORTUGUESE: Please enter your password to proceed"
   },
 
   nodesDashboard: {

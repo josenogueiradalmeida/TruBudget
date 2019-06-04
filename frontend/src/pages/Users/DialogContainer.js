@@ -16,6 +16,7 @@ import {
   createUser,
   grantGlobalPermission,
   revokeGlobalPermission,
+  showNextStep
 } from "./actions";
 
 import Dialog from "./Dialog";
@@ -40,7 +41,9 @@ const mapStateToProps = state => {
     editDialogShown: state.getIn(["users", "editDialogShown"]),
     globalPermissions: state.getIn(["users", "globalPermissions"]),
     permissionsExpanded: state.getIn(["users", "permissionsExpanded"]),
-    allowedIntents: state.getIn(["login", "allowedIntents"])
+    allowedIntents: state.getIn(["login", "allowedIntents"]),
+    currentStep: state.getIn(["users", "currentStep"]),
+    wrongPasswordGiven: state.getIn(["users", "wrongPasswordGiven"])
   };
 };
 
@@ -61,6 +64,7 @@ const mapDispatchToProps = dispatch => {
     hideDashboardDialog: () => dispatch(hideDashboardDialog()),
     grantGlobalPermission: (identity, intent) => dispatch(grantGlobalPermission(identity, intent)),
     revokeGlobalPermission: (identity, intent) => dispatch(revokeGlobalPermission(identity, intent)),
+    showNextStep: step => dispatch(showNextStep(step))
   };
 };
 
