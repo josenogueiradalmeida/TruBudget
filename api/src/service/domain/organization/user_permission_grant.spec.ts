@@ -30,7 +30,7 @@ const baseUser: UserRecord = {
 };
 
 const baseRepository = {
-  getUser: async () => baseUser,
+  getTargetUser: async () => baseUser,
 };
 
 describe("Granting user permissions: permissions", () => {
@@ -55,27 +55,38 @@ describe("Granting user permissions: permissions", () => {
 
 describe("Granting user permissions: updates", () => {
   it("The permission is granted if the user has the correct permissions", async () => {
+    const permissionTestUser: UserRecord = {
+      ...baseUser,
+      permissions: { "user.intent.grantPermission": [alice.id] },
+    };
     const result = await grantUserPermission(ctx, alice, userId, bob.id, grantIntent, {
-      getUser: async () =>
-        Promise.resolve({
-          ...baseUser,
-          permissions: { "user.intent.grantPermission": [alice.id] },
-        }),
+      getTargetUser: async () => Promise.resolve(permissionTestUser),
     });
     if (Result.isErr(result)) {
       throw result;
     }
 
-    const sourcedUser = result.reduce(
+    const userAfterGrantingPermission = result.reduce(
       (user, event) => newUserFromEvent(ctx, user, event),
-      baseUser,
+      permissionTestUser,
     );
-    if (Result.isErr(sourcedUser)) {
-      throw sourcedUser;
+    if (Result.isErr(userAfterGrantingPermission)) {
+      throw userAfterGrantingPermission;
     }
 
     assert.isTrue(Result.isOk(result), "Alice is authorized to grant this permission");
-    assert.isTrue(result.length > 0, "An event is created");
+    // Bob now has the permission
+    assert.isTrue(
+      userAfterGrantingPermission.permissions["user.intent.grantPermission"]!.some(
+        x => x === bob.id,
+      ),
+    );
+    // Alice still has the permission
+    assert.isTrue(
+      userAfterGrantingPermission.permissions["user.intent.grantPermission"]!.some(
+        x => x === alice.id,
+      ),
+    );
   });
 
   it("An existing permission is granted, nothing happens", async () => {
@@ -92,21 +103,27 @@ describe("Granting user permissions: updates", () => {
       additionalData: {},
     };
     const result = await grantUserPermission(ctx, alice, userId, alice.id, grantIntent, {
-      getUser: async () => Promise.resolve(testUser),
+      getTargetUser: async () => Promise.resolve(testUser),
     });
     if (Result.isErr(result)) {
       throw result;
     }
 
-    const sourcedUser = result.reduce(
+    const userAfterGrantingPermission = result.reduce(
       (user, event) => newUserFromEvent(ctx, user, event),
       testUser,
     );
-    if (Result.isErr(sourcedUser)) {
-      throw sourcedUser;
+    if (Result.isErr(userAfterGrantingPermission)) {
+      throw userAfterGrantingPermission;
     }
 
     assert.isTrue(Result.isOk(result), "Alice is authorized to grant this permission");
     assert.deepEqual(result, []);
+    // Alice still has the permission
+    assert.isTrue(
+      userAfterGrantingPermission.permissions["user.intent.grantPermission"]!.some(
+        x => x === alice.id,
+      ),
+    );
   });
 });

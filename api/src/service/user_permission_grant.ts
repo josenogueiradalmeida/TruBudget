@@ -27,7 +27,7 @@ export async function grantUserPermission(
     grantee,
     intent,
     {
-      getUser: id => UserQuery.getUser(conn, ctx, serviceUser, id),
+      getTargetUser: id => UserQuery.getUser(conn, ctx, serviceUser, id),
     },
   );
   if (Result.isErr(result)) return Promise.reject(result);

@@ -70,10 +70,6 @@ export const globalIntents: Intent[] = [
   "global.createUser",
   "global.createGroup",
   "user.authenticate",
-  "user.changePassword",
-  "user.intent.listPermissions",
-  "user.intent.grantPermission",
-  "user.intent.revokePermission",
   "network.registerNode",
   "network.list",
   "network.listActive",
@@ -119,6 +115,7 @@ export const userIntents: Intent[] = [
   "user.intent.grantPermission",
   "user.intent.revokePermission",
 ];
+
 export const groupIntents: Intent[] = ["group.addUser", "group.removeUser"];
 
 export const projectIntents: Intent[] = [

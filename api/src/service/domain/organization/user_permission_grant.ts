@@ -9,15 +9,12 @@ import { NotAuthorized } from "../errors/not_authorized";
 import { NotFound } from "../errors/not_found";
 import { Identity } from "./identity";
 import { ServiceUser } from "./service_user";
-import * as Project from "../workflow/project";
-import * as UserRecord from "./user_record";
-import * as ProjectEventSourcing from "../workflow/project_eventsourcing";
 import * as UserEventSourcing from "./user_eventsourcing";
 import * as UserPermissionGranted from "./user_permission_granted";
-import { PreconditionError } from "../errors/precondition_error";
+import * as UserRecord from "./user_record";
 
 interface Repository {
-  getUser(userId: UserRecord.Id): Promise<Result.Type<UserRecord.UserRecord>>;
+  getTargetUser(userId: UserRecord.Id): Promise<Result.Type<UserRecord.UserRecord>>;
 }
 
 type eventTypeType = "user_permission_granted";
@@ -31,7 +28,7 @@ export async function grantUserPermission(
   intent: Intent,
   repository: Repository,
 ): Promise<Result.Type<BusinessEvent[]>> {
-  const user = await repository.getUser(userId);
+  const user = await repository.getTargetUser(userId);
 
   if (Result.isErr(user)) {
     return new NotFound(ctx, "user", userId);

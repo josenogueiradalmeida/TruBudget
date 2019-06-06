@@ -14,7 +14,7 @@ import * as UserPermissionRevoked from "./user_permission_revoked";
 import * as UserRecord from "./user_record";
 
 interface Repository {
-  getUser(userId: UserRecord.Id): Promise<Result.Type<UserRecord.UserRecord>>;
+  getTargetUser(userId: UserRecord.Id): Promise<Result.Type<UserRecord.UserRecord>>;
 }
 
 export async function revokeUserPermission(
@@ -25,7 +25,7 @@ export async function revokeUserPermission(
   intent: Intent,
   repository: Repository,
 ): Promise<Result.Type<BusinessEvent[]>> {
-  const user = await repository.getUser(userId);
+  const user = await repository.getTargetUser(userId);
 
   if (Result.isErr(user)) {
     return new NotFound(ctx, "user", userId);

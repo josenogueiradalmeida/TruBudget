@@ -30,13 +30,13 @@ const baseUser: UserRecord = {
 };
 
 const baseRepository = {
-  getUser: async () => baseUser,
+  getTargetUser: async () => baseUser,
 };
 
 describe("Revoking user permissions: permissions", () => {
   it("Without the user.intent.revokePermission permission, a user cannot revoke user permissions", async () => {
     const result = await revokeUserPermission(ctx, alice, userId, bob.id, grantIntent, {
-      getUser: async () =>
+      getTargetUser: async () =>
         Promise.resolve({
           ...baseUser,
           permissions: { "user.intent.grantPermission": [alice.id] },
@@ -59,54 +59,70 @@ describe("Revoking user permissions: permissions", () => {
 
 describe("Revoking user permissions: updates", () => {
   it("The permission is revoked if the user has the correct permissions", async () => {
+    const permissionTestUser: UserRecord = {
+      ...baseUser,
+      permissions: {
+        "user.intent.revokePermission": [alice.id],
+        "user.intent.grantPermission": [bob.id],
+      },
+    };
     const result = await revokeUserPermission(ctx, alice, userId, bob.id, grantIntent, {
-      getUser: async () =>
-        Promise.resolve({
-          ...baseUser,
-          permissions: {
-            "user.intent.revokePermission": [alice.id],
-            "user.intent.grantPermission": [bob.id],
-          },
-        }),
+      getTargetUser: async () => Promise.resolve(permissionTestUser),
     });
     if (Result.isErr(result)) {
       throw result;
     }
 
-    const sourcedUser = result.reduce(
+    const userAfterRevokingPermission = result.reduce(
       (user, event) => newUserFromEvent(ctx, user, event),
       baseUser,
     );
-    if (Result.isErr(sourcedUser)) {
-      throw sourcedUser;
+    if (Result.isErr(userAfterRevokingPermission)) {
+      throw userAfterRevokingPermission;
     }
 
     assert.isTrue(Result.isOk(result), "Alice is authorized to grant this permission");
     assert.isTrue(result.length > 0, "An event is created");
+    // Permission that was revoked does not exist anymore
+    assert.isFalse(userAfterRevokingPermission.permissions.hasOwnProperty(grantIntent));
+    // Alice still has the permission to revoke permissions
+    assert.isTrue(
+      userAfterRevokingPermission.permissions["user.intent.revokePermission"]!.some(
+        x => x === alice.id,
+      ),
+    );
   });
 
   it("A not existing permission is revoked, nothing happens", async () => {
     const testIntent = "user.changePassword";
+    const permissionTestUser: UserRecord = {
+      ...baseUser,
+      permissions: {
+        "user.intent.revokePermission": [alice.id],
+      },
+    };
     const result = await revokeUserPermission(ctx, alice, userId, alice.id, testIntent, {
-      getUser: async () =>
-        Promise.resolve({
-          ...baseUser,
-          permissions: { "user.intent.revokePermission": [alice.id] },
-        }),
+      getTargetUser: async () => Promise.resolve(permissionTestUser),
     });
     if (Result.isErr(result)) {
       throw result;
     }
 
-    const sourcedUser = result.reduce(
+    const userAfterRevokingPermission = result.reduce(
       (user, event) => newUserFromEvent(ctx, user, event),
       baseUser,
     );
-    if (Result.isErr(sourcedUser)) {
-      throw sourcedUser;
+    if (Result.isErr(userAfterRevokingPermission)) {
+      throw userAfterRevokingPermission;
     }
 
     assert.isTrue(Result.isOk(result), "Alice is authorized to revoke this permission");
     assert.deepEqual(result, []);
+    // Alice still has the permission to revoke permissions
+    assert.isTrue(
+      userAfterRevokingPermission.permissions["user.intent.revokePermission"]!.some(
+        x => x === alice.id,
+      ),
+    );
   });
 });

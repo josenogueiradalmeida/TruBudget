@@ -22,7 +22,7 @@ export async function revokeUserPermission(
 ): Promise<void> {
   const result = await Cache.withCache(conn, ctx, async cache =>
     UserPermissionRevoke.revokeUserPermission(ctx, serviceUser, userId, revokee, intent, {
-      getUser: id => UserQuery.getUser(conn, ctx, serviceUser, id),
+      getTargetUser: id => UserQuery.getUser(conn, ctx, serviceUser, id),
     }),
   );
   if (Result.isErr(result)) return Promise.reject(result);
