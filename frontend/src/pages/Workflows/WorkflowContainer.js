@@ -38,7 +38,8 @@ import {
   showWorkflowItemPermissions,
   storeWorkflowItemsSelected,
   storeWorkflowType,
-  updateWorkflowOrderOnState
+  updateWorkflowOrderOnState,
+  closeWorkflowitemHistory
 } from "./actions";
 import SubProjectDetails from "./SubProjectDetails";
 import Workflow from "./Workflow";
@@ -166,7 +167,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     storeWorkflowItemsSelected: workflowItems => dispatch(storeWorkflowItemsSelected(workflowItems)),
     openAnalyticsDialog: () => dispatch(openAnalyticsDialog()),
     showWorkflowitemAdditionalData: wId => dispatch(showWorkflowitemAdditionalData(wId)),
-    hideWorkflowitemAdditionalData: () => dispatch(hideWorkflowitemAdditionalData())
+    hideWorkflowitemAdditionalData: () => dispatch(hideWorkflowitemAdditionalData()),
+    closeWorkflowitemHistory: () => dispatch(closeWorkflowitemHistory())
   };
 };
 

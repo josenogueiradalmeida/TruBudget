@@ -43,6 +43,7 @@ export const WORKFLOW_EDIT = "WORKFLOW_EDIT";
 export const SHOW_WORKFLOW_DETAILS = "SHOW_WORKFLOW_DETAILS";
 export const HIDE_WORKFLOW_DETAILS = "HIDE_WORKFLOW_DETAILS";
 export const CLOSE_WORKFLOWITEM_DETAILS = "CLOSE_WORKFLOWITEM_DETAILS";
+export const CLOSE_WORKFLOWITEM_HISTORY = "CLOSE_WORKFLOWITEM_HISTORY";
 
 export const ENABLE_WORKFLOW_EDIT = "ENABLE_WORKFLOW_EDIT";
 export const DISABLE_WORKFLOW_EDIT = "DISABLE_WORKFLOW_EDIT";
@@ -193,6 +194,12 @@ export function hideWorkflowDetails() {
 export function closeWorkflowitemDetailsDialog() {
   return {
     type: CLOSE_WORKFLOWITEM_DETAILS
+  };
+}
+
+export function closeWorkflowitemHistory() {
+  return {
+    type: CLOSE_WORKFLOWITEM_HISTORY
   };
 }
 

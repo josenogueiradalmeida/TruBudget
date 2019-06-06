@@ -5,7 +5,7 @@ import {
   FETCH_NEXT_WORKFLOWITEM_HISTORY_PAGE,
   FETCH_NEXT_WORKFLOWITEM_HISTORY_PAGE_SUCCESS
 } from "./actions";
-import { CLOSE_WORKFLOWITEM_DETAILS } from "../Workflows/actions";
+import { CLOSE_WORKFLOWITEM_HISTORY, CLOSE_WORKFLOWITEM_DETAILS } from "../Workflows/actions";
 
 const historyPageSize = 30;
 
@@ -35,7 +35,8 @@ export default function reducer(state = initialState, action) {
         currentHistoryPage: action.currentHistoryPage,
         isHistoryLoading: false
       });
-
+    case CLOSE_WORKFLOWITEM_HISTORY:
+      return initialState;
     case CLOSE_WORKFLOWITEM_DETAILS:
       return initialState;
 
